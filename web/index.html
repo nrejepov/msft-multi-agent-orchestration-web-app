@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QPay Service Desk</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="QPay service desk home">
+        <span class="brand-mark" aria-hidden="true">Q</span>
+        <span>QPay Service Desk</span>
+      </a>
+      <div class="status"><span class="status-dot"></span> Connected to Microsoft Foundry</div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">TICKETING SIMULATION</p>
+          <h1 id="page-title">Support Operations Board</h1>
+          <p class="intro">
+            New requests arrive at the General Service Desk. Use the hosted
+            multi-agent system to classify each ticket and send it to the right team.
+          </p>
+        </div>
+        <div class="flow" aria-label="Ticket processing flow">
+          <span>Service desk</span><b>→</b><span>Multi-agent triage</span><b>→</b><span>Department</span>
+        </div>
+      </section>
+
+      <section class="composer" aria-labelledby="composer-title">
+        <div class="composer-heading">
+          <div>
+            <p class="section-label">CREATE TICKET</p>
+            <h2 id="composer-title">Add a customer request</h2>
+          </div>
+          <label class="sample-label" for="sample-ticket">Use an example</label>
+          <select id="sample-ticket">
+            <option value="">Choose a ticket…</option>
+            <option>I was charged twice for the same invoice. Can you reverse one payment?</option>
+            <option>How do I list customers using the Billing API?</option>
+            <option>Can I export all invoices as a CSV?</option>
+            <option>Something happened and it is not right. Please fix it.</option>
+          </select>
+        </div>
+        <form id="ticket-form">
+          <label class="sr-only" for="ticket-input">Customer support ticket</label>
+          <textarea
+            id="ticket-input"
+            maxlength="2000"
+            placeholder="Describe the customer issue…"
+            required
+          ></textarea>
+          <div class="form-footer">
+            <p id="form-message" role="status">New tickets enter the General Service Desk before classification.</p>
+            <button id="add-button" type="submit">
+              <span>Add to service desk</span><span aria-hidden="true">＋</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="board" aria-label="Support queues">
+        <article class="queue queue-service" data-queue="service_desk">
+          <header>
+            <div><span class="queue-icon">IN</span><h2>General Service Desk</h2></div>
+            <span class="count">0</span>
+          </header>
+          <p class="queue-description">Unclassified requests and tickets requiring human review</p>
+          <div class="cards" id="service_desk-cards"><p class="empty">No tickets waiting</p></div>
+        </article>
+
+        <article class="queue queue-billing" data-queue="billing">
+          <header>
+            <div><span class="queue-icon">$</span><h2>Billing</h2></div>
+            <span class="count">0</span>
+          </header>
+          <p class="queue-description">Charges, refunds, payouts and payment disputes</p>
+          <div class="cards" id="billing-cards"><p class="empty">No tickets routed here</p></div>
+        </article>
+
+        <article class="queue queue-technical" data-queue="technical">
+          <header>
+            <div><span class="queue-icon">&lt;/&gt;</span><h2>Technical/API</h2></div>
+            <span class="count">0</span>
+          </header>
+          <p class="queue-description">APIs, SDKs, integrations, webhooks and errors</p>
+          <div class="cards" id="technical-cards"><p class="empty">No tickets routed here</p></div>
+        </article>
+
+        <article class="queue queue-general" data-queue="general">
+          <header>
+            <div><span class="queue-icon">?</span><h2>Product Support</h2></div>
+            <span class="count">0</span>
+          </header>
+          <p class="queue-description">Product guidance, exports, reports and navigation</p>
+          <div class="cards" id="general-cards"><p class="empty">No tickets routed here</p></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
