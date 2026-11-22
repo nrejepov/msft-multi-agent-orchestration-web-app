@@ -72,7 +72,6 @@ h3 {
 
 .eyebrow,
 .board-total,
-.activity p,
 .empty-state,
 .ticket-message {
   margin: 0;
@@ -119,18 +118,12 @@ h3 {
 }
 
 .generation-panel.is-submitted {
-  grid-template-columns: minmax(0, 1fr);
-  min-height: 44px;
-  max-height: 44px;
-  padding: 11px 14px;
-  place-items: center;
+  align-items: flex-start;
   border-color: rgb(22 132 91 / 35%);
 }
 
-.generation-panel.is-submitted .generation-visual,
-.generation-panel.is-submitted .generation-content,
-.generation-panel.is-submitted .generation-typed {
-  display: none;
+.generation-panel.is-submitted .generation-label {
+  color: var(--success);
 }
 
 .generation-visual {
@@ -170,8 +163,7 @@ h3 {
 
 .generation-label,
 .generation-detail,
-.generation-typed,
-.submitted-state {
+.generation-typed {
   margin: 0;
 }
 
@@ -208,6 +200,12 @@ h3 {
   display: block;
 }
 
+.generation-panel.is-submitted .generation-typed {
+  min-height: 48px;
+  display: block;
+  color: var(--muted);
+}
+
 .generation-panel.is-generating .generation-typed::after {
   content: "";
   width: 1px;
@@ -217,19 +215,6 @@ h3 {
   vertical-align: -2px;
   background: var(--accent);
   animation: typing-cursor 650ms steps(1) infinite;
-}
-
-.submitted-state {
-  grid-column: 1 / -1;
-  display: none;
-  color: var(--success);
-  font-size: var(--type-body);
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-.generation-panel.is-submitted .submitted-state {
-  display: block;
 }
 
 .eyebrow {
@@ -318,29 +303,6 @@ h3 {
   border-radius: inherit;
   background: var(--accent);
   transition: width 260ms ease;
-}
-
-.activity {
-  min-height: 96px;
-  padding: var(--space-3);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-control);
-  background: var(--surface);
-}
-
-.activity-label {
-  margin-bottom: var(--space-2) !important;
-  color: var(--muted);
-  font-size: var(--type-caption);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-}
-
-.activity-message {
-  font-size: var(--type-body);
-  line-height: 1.5;
 }
 
 .notification {
@@ -499,12 +461,6 @@ h3 {
 
 .foundry-flow.is-analysing .model-loader {
   opacity: 1;
-}
-
-.foundry-flow.is-routing .flow-pipe--out,
-.foundry-flow.is-error .flow-pipe--out {
-  opacity: 1;
-  animation: pipe-stripes 900ms linear reverse 1 both;
 }
 
 .foundry-flow.is-complete .model-node {

@@ -64,7 +64,6 @@ const tickets = [
 const simulateButton = document.querySelector("#simulate-button");
 const resetButton = document.querySelector("#reset-button");
 const template = document.querySelector("#ticket-template");
-const activityMessage = document.querySelector("#activity-message");
 const progressLabel = document.querySelector("#progress-label");
 const progressBar = document.querySelector("#progress-bar");
 const totalCount = document.querySelector("#total-count");
@@ -102,7 +101,6 @@ async function submitNextTicket() {
   await startTyping(ticket.message);
   markSubmitted(ticket);
 
-  activityMessage.textContent = `Foundry is analysing ${ticket.id}.`;
   setFlow(
     "is-analysing",
     "received",
@@ -162,12 +160,11 @@ function routeSuccessfulTicket(ticket, result) {
 
   addToQueue(result.queue, card);
   setFlow(
-    "is-routing",
+    "is-complete",
     "routed",
     "Routing complete",
     `${ticket.id} → ${queueName(result.queue)}`,
   );
-  activityMessage.textContent = `${ticket.id} assigned to ${queueName(result.queue)}.`;
 }
 
 function routeToServiceDesk(ticket) {
@@ -182,13 +179,13 @@ function routeToServiceDesk(ticket) {
     "Manual routing required",
     `${ticket.id} → ${queueName("service_desk")}`,
   );
-  activityMessage.textContent = `${ticket.id} sent to the general queue.`;
   showNotification(
     "No model was detected. The ticket is being routed to Service Desk for manual assignment to the appropriate team.",
   );
 }
 
 function markSubmitted(ticket) {
+  generationLabel.textContent = "Submitted";
   generationTyped.textContent = ticket.message;
   generationPanel.classList.remove("is-generating");
   generationPanel.classList.add("is-submitted");
@@ -306,7 +303,6 @@ function resetDemo() {
   generationLabel.textContent = "Ticket generator";
   generationDetail.textContent = "Waiting";
   generationTyped.textContent = "";
-  activityMessage.textContent = "Ready for a ticket.";
   resetFlow();
   updateProgress();
   updateCounts();
