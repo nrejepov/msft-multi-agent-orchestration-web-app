@@ -44,11 +44,6 @@
             <p class="submitted-state">Submitted</p>
           </div>
 
-          <div class="notification" id="routing-notification" role="alert" hidden>
-            <p class="notification-title">Automated routing unavailable</p>
-            <p id="notification-message"></p>
-          </div>
-
           <div class="progress-block">
             <div class="progress-copy">
               <span>Examples</span>
@@ -89,6 +84,10 @@
           <div class="flow-copy" aria-live="polite">
             <p class="flow-status" id="flow-status">Waiting for a ticket</p>
             <p class="flow-detail" id="flow-detail">The model selects one queue.</p>
+          </div>
+
+          <div class="notification" id="routing-notification" role="alert" hidden>
+            <p id="notification-message"></p>
           </div>
 
           <div class="flow-steps" aria-hidden="true">

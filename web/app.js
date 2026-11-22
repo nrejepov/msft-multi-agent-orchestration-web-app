@@ -99,7 +99,8 @@ async function submitNextTicket() {
   generationPanel.classList.add("is-generating");
   generationLabel.textContent = "Generating ticket";
   generationDetail.textContent = `${clientName(ticket.reporter)} · ${ticket.date}`;
-  startTyping(ticket.message, () => markSubmitted(ticket));
+  await startTyping(ticket.message);
+  markSubmitted(ticket);
 
   activityMessage.textContent = `Foundry is analysing ${ticket.id}.`;
   setFlow(
@@ -111,13 +112,9 @@ async function submitNextTicket() {
 
   try {
     const result = await routeTicket(ticket.message);
-    stopTyping();
-    markSubmitted(ticket);
     routeSuccessfulTicket(ticket, result);
-  } catch (error) {
-    stopTyping();
-    markSubmitted(ticket);
-    routeToServiceDesk(ticket, error);
+  } catch {
+    routeToServiceDesk(ticket);
   } finally {
     setControlsBusy(false);
     updateCounts();
@@ -173,7 +170,7 @@ function routeSuccessfulTicket(ticket, result) {
   activityMessage.textContent = `${ticket.id} assigned to ${queueName(result.queue)}.`;
 }
 
-function routeToServiceDesk(ticket, error) {
+function routeToServiceDesk(ticket) {
   const card = buildTicketCard(ticket);
   card.classList.add("is-review");
   card.querySelector(".routing-state").textContent = "Manual review";
@@ -187,7 +184,7 @@ function routeToServiceDesk(ticket, error) {
   );
   activityMessage.textContent = `${ticket.id} sent to the general queue.`;
   showNotification(
-    `No AI routing result was detected. ${ticket.id} was sent to Service Desk Support for manual reassignment. ${error.message}`,
+    "No model was detected. The ticket is being routed to Service Desk for manual assignment to the appropriate team.",
   );
 }
 
@@ -237,21 +234,23 @@ function resetFlow() {
   flowDetail.textContent = "The model selects one queue.";
 }
 
-function startTyping(message, onComplete) {
+function startTyping(message) {
   stopTyping();
   generationTyped.textContent = "";
 
-  let position = 0;
-  const interval = Math.max(18, Math.floor(2500 / message.length));
-  typingTimer = window.setInterval(() => {
-    position += 1;
-    generationTyped.textContent = message.slice(0, position);
+  return new Promise((resolve) => {
+    let position = 0;
+    const interval = Math.max(18, Math.floor(2500 / message.length));
+    typingTimer = window.setInterval(() => {
+      position += 1;
+      generationTyped.textContent = message.slice(0, position);
 
-    if (position >= message.length) {
-      stopTyping();
-      onComplete();
-    }
-  }, interval);
+      if (position >= message.length) {
+        stopTyping();
+        resolve();
+      }
+    }, interval);
+  });
 }
 
 function stopTyping() {

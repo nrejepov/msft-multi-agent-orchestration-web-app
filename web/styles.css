@@ -344,11 +344,14 @@ h3 {
 }
 
 .notification {
-  padding: 14px 16px;
+  width: min(360px, 100%);
+  margin: 22px auto 0;
+  padding: 20px;
   border: 1px solid #d4a72c;
   border-radius: var(--radius-control);
   background: #fff7d6;
   color: var(--ink);
+  text-align: left;
 }
 
 .notification[hidden] {
@@ -359,17 +362,10 @@ h3 {
   margin: 0;
 }
 
-.notification-title {
-  margin-bottom: 4px !important;
+#notification-message {
   font-size: var(--type-body);
   font-weight: 500;
   line-height: 1.5;
-}
-
-#notification-message {
-  color: var(--muted);
-  font-size: var(--type-caption);
-  line-height: 1.3;
 }
 
 .reset-action {
@@ -508,7 +504,7 @@ h3 {
 .foundry-flow.is-routing .flow-pipe--out,
 .foundry-flow.is-error .flow-pipe--out {
   opacity: 1;
-  animation: pipe-stripes 2s infinite linear reverse;
+  animation: pipe-stripes 900ms linear reverse 1 both;
 }
 
 .foundry-flow.is-complete .model-node {
