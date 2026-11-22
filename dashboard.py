@@ -45,10 +45,10 @@ class AgentResult(BaseModel):
 
 
 TEAM_NAMES = {
-    "billing": "Billing Team",
-    "technical": "Technical/API Team",
-    "general": "Product Support Team",
-    "needs_review": "General Service Desk Team",
+    "billing": "Billing and Payments Support",
+    "technical": "Technical Infrastructure Support",
+    "general": "People & Culture Support",
+    "needs_review": "Service Desk Support – General Queue",
 }
 
 
