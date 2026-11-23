@@ -154,8 +154,13 @@ function routeSuccessfulTicket(ticket, result) {
     card.querySelector(".routing-state").textContent = "Manual review";
   } else {
     const confidence = normaliseConfidence(result.confidence);
+    const draft = card.querySelector(".specialist-draft");
     card.classList.add("is-routed");
     card.querySelector(".routing-state").textContent = `Confidence ${confidence}%`;
+    draft.querySelector(".specialist-draft-label").textContent =
+      `${result.team || queueName(result.queue)} draft`;
+    draft.querySelector(".specialist-draft-text").textContent = result.response;
+    draft.hidden = false;
   }
 
   addToQueue(result.queue, card);
